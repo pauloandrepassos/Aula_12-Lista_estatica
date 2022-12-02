@@ -58,14 +58,31 @@ int inserir_inicio(Lista *l, struct numero valor){
     return 1;
 }
 
-int inserir_meio(Lista *l, struct numero valor){
-    /*if(l == NULL)
+int insert(Lista *l, struct numero valor, int pos){
+    if(l == NULL)
         return  0;
-    if(lista_cheia(l))
-        return 0;*/
+    if(lista_cheia(l)) {
+        printf("Lista Cheia!\n");
+        return 0;
+    }
+    if (pos > MAX - 1) {
+        printf("posicao inexistente na lista");
+        return  0;
+    }
+    if (pos >= l->qtd) {
+        append(l, valor);
+        return 1;
+    }
+    int i;
+    for(i = l->qtd; i >= pos; i--) {
+        l->dados[i + 1] = l->dados[i];
+    }
+    l->dados[pos] = valor;
+    l->qtd++;
+    return 1;
 }
 
-int inserir_final(Lista *l, struct numero valor){
+int append(Lista *l, struct numero valor){
     if(l == NULL)
         return 0;
     if(lista_cheia(l)){
@@ -135,6 +152,10 @@ int remover_fim(Lista *l){
     }
     l->qtd--;
     return 1;
+}
+
+int clear(Lista *l) {
+    l->qtd = 0;
 }
 
 int imprime(Lista *l) {
